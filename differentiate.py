@@ -1,23 +1,23 @@
 import activation as act
-def sigmoid(z):
+def Sigmoid(z):
     h= 0.00001
-    a=act.Sigmoid(z-h);
-    b=act.Sigmoid(z-2*h);
-    c=act.Sigmoid(z+h);
-    d=act.Sigmoid(z+2*h);
+    a=act.sigmoid(z-h);
+    b=act.sigmoid(z-2*h);
+    c=act.sigmoid(z+h);
+    d=act.sigmoid(z+2*h);
     dif=(b- 8*a + 8*c -d)/(12*h);
     return dif;
 
-def tanh(z):
+def Tanh(z):
     h= 0.00001
-    a=act.Tanh(z-h);
-    b=act.Tanh(z-2*h);
-    c=act.Tanh(z+h);
-    d=act.Tanh(z+2*h);
+    a=act.tanh(z-h);
+    b=act.tanh(z-2*h);
+    c=act.tanh(z+h);
+    d=act.tanh(z+2*h);
     dif=(b - 8*a + 8*c - d)/(12*h);
     return dif;
 
-def ReLU(z):
+def reLU(z):
     if(z<=0): 
      h = 0.00001
      a=act.ReLU(z);
