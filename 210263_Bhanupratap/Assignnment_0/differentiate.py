@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import activation as act
 
 def sigmoidDerivative(z):
-    return (-np.exp(-z)/(1+np.exp(-z))^2)
+    return (-np.exp(-z)/(1+np.exp(-z))**2)
 def tanhDerivative(z):
     return (1+ act.tanh(z))
 def ReLUDerivative(z):
