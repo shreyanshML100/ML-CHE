@@ -58,9 +58,7 @@ def fitGD(X_train, Y_train, alpha, lamb_in, ToR, iterations, theta_in):
             dj_dtheta = np.add(diffcostFun(theta, X_train, Y_train), reg_dj_dtheta)
             theta = theta - alpha * dj_dtheta
             print(theta)
-            if i < iterations+1:
-                J_history.append(costFun(theta, X_train, Y_train) + reg_cost)
-                p_history.append([theta])
+            J_history[i]  =  (costFun(theta, X_train, Y_train) + reg_cost)
 
     if ToR == 3:
         for i in range(iterations):
@@ -73,9 +71,7 @@ def fitGD(X_train, Y_train, alpha, lamb_in, ToR, iterations, theta_in):
             reg_cost = (reg_cost * lamb_in) / (2 * m)
             dj_dtheta = np.add(diffcostFun(theta, X_train, Y_train), reg_dj_dtheta)
             theta = theta - alpha * dj_dtheta
-            if i < 100000:
-                J_history.append(costFun(theta, X_train, Y_train) + reg_cost)
-                p_history.append([theta])
+            J_history[i]  =  (costFun(theta, X_train, Y_train) + reg_cost)
 
     #fig, (ax1, ax2) = plt.subplots(1, 2, constrained_layout=True, figsize=(12, 4))
     #ax1.plot(J_history[:100])
