@@ -4,17 +4,14 @@ import math
 import matplotlib.pyplot as plt
 
 
-def costFun(theta, X_train, Y_train):
-
-    m = X_train.shape[0]  # examples
-    n = X_train.shape[1]  # features
-    x = np.hstack((np.ones((X_train.shape[0], 1)), X_train))
-    Theta = theta.reshape((theta.shape[0], 1))
-    j = 0
-
-    for i in range(m):
-        j = j + ((np.dot(x[i], Theta) - Y_train[i]) * (np.dot(x[i], Theta) - Y_train[i]))
-    return j / 2
+def costFun(x,y,theta):
+m=x.shape[0]
+J=0
+x0=np.ones(m).reshape(m,1)
+x=np.concatenate((x0,x), axis=1)
+loss=np.dot(x,theta)-y
+J=np.sum(loss**2)/(2*m)
+return J   
 
 
 def diffCostFun(theta, X_train, Y_train):
