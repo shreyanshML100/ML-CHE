@@ -41,6 +41,7 @@ def fitGD(X_train, Y_train, alpha, lamda,type_, iter) :
             j_theta = np.append(j_theta,theta)
    
     print(j_theta)
+   
     
     return (theta)
 
@@ -56,7 +57,7 @@ def fitNormal(X_train,Y_train):
     theeta=np.dot(a,b)
     return theeta
 
-def locallyWeighted(X_train, Y_train, x_pred, tau, num_iters=1):
+def locallyWeighted(X_train, Y_train, x_pred, tau, num_iters):
     X_train=np.array(X_train)
     Y_train=np.array(Y_train)
 
@@ -66,5 +67,3 @@ def locallyWeighted(X_train, Y_train, x_pred, tau, num_iters=1):
         weights = np.exp(-distances**2 / (2 * tau**2))
         y_pred = np.sum(weights * Y_train) / np.sum(weights)
         return y_pred   
-
-
