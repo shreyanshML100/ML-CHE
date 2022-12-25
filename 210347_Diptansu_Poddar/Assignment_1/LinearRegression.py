@@ -7,14 +7,12 @@ def h(theta,X):
 
 def costFun(theta, X_train, Y_train):
     sum = 0
-    print(Y_train.shape[0])
     for i in range(Y_train.shape[0]):
         sum += 1/(2*(Y_train.shape[0]))*(pow(h(theta,X_train[i])-Y_train[i],2))
     return sum
 
 def diffcostFun(theta, X_train, Y_train):
     sum = np.zeros(len(theta))
-    print(Y_train.shape[0])
     for j in range(len(theta)):
         for i in range(Y_train.shape[0]):
             sum[j] += 1/(Y_train.shape[0])*(h(theta, X_train[i]) - Y_train[i])*X_train[i][j]
@@ -28,9 +26,7 @@ def fitGD(X_train, Y_train, alpha, lamb_in, ToR, iterations, theta_in):
     p_history = np.zeros(1)
     theta = theta_in
     m = X_train.shape[0]
-    print(m)
     n = len(theta)
-    print(theta)
     #reg_dj_dtheta = np.zeros(n)
 
     if ToR == 1:
@@ -57,8 +53,7 @@ def fitGD(X_train, Y_train, alpha, lamb_in, ToR, iterations, theta_in):
             reg_cost = (reg_cost * lamb_in) / (2 * m)
             dj_dtheta = np.add(diffcostFun(theta, X_train, Y_train), reg_dj_dtheta)
             theta = theta - alpha * dj_dtheta
-            print(theta)
-            J_history[i]  =  (costFun(theta, X_train, Y_train) + reg_cost)
+            J_history[i] = (costFun(theta, X_train, Y_train) + reg_cost)
 
     if ToR == 3:
         for i in range(iterations):
@@ -71,7 +66,7 @@ def fitGD(X_train, Y_train, alpha, lamb_in, ToR, iterations, theta_in):
             reg_cost = (reg_cost * lamb_in) / (2 * m)
             dj_dtheta = np.add(diffcostFun(theta, X_train, Y_train), reg_dj_dtheta)
             theta = theta - alpha * dj_dtheta
-            J_history[i]  =  (costFun(theta, X_train, Y_train) + reg_cost)
+            J_history[i] = (costFun(theta, X_train, Y_train) + reg_cost)
 
     #fig, (ax1, ax2) = plt.subplots(1, 2, constrained_layout=True, figsize=(12, 4))
     #ax1.plot(J_history[:100])
@@ -100,25 +95,29 @@ def wm(X_train, tau, x):
     return w
 
 
-def locallyWeighted(X_train, Y_train, x, tau):
-    x_ = np.array([1,x])
+def locallyWeighted(y,X_train, Y_train, tau):
+    x=y
+    x_ = np.array([1, x])
     w = wm(X_train, tau, x_)
     theta = np.linalg.pinv(X_train.T * (w * X_train)) * (X_train.T * (w * Y_train))
     y = np.dot(x_, theta)
 
-    return y
+    return float(y[0][0])
 
 def fitNormal(X_train,Y_train):
     return np.dot(np.dot(np.linalg.inv(np.dot(np.transpose(X_train),X_train)),np.transpose(X_train)),Y_train)
 
+"""
 X_train = np.array([[2.5, 4.7, 5.2, 7.3, 9.5, 11.5]])
 Y_train = np.array([[5.21, 7.70, 8.30, 11, 14.5, 15]])
 X_train=np.transpose(X_train)
 m = X_train.shape[0]
 X_train = np.concatenate([np.ones(m).reshape(m, 1),X_train],axis=1)
 Y_train=np.transpose(Y_train)
-print(X_train)
-#print(locallyWeighted(X_train,Y_train,5,0.5))
-theta_in=np.ones(X_train.shape[1])
-print(theta_in)
-print(fitGD(X_train,Y_train,0.01,0,1,5000,theta_in))
+#print(X_train)
+X_test=np.array([1,2,3,4,5])
+Y_test=np.zeros(X_test.shape[0])
+for i in range(X_test.shape[0]):
+    Y_test[i]=locallyWeighted(X_test[i],X_train,Y_train,0.1)
+print(Y_test)
+"""
