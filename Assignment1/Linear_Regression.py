@@ -4,7 +4,7 @@ import math
 import matplotlib.pyplot as plt
 
 
-def costFun(x,y,theta):
+def costFun(X_train,Y_train,theta):
 m=x.shape[0]
 J=0
 x0=np.ones(m).reshape(m,1)
