@@ -1,0 +1,114 @@
+import numpy as np
+import matplotlib.pyplot as plt
+def costFun(theta,x,y):
+    cost=0
+    m=y.shape[0]
+    for i in range(m):
+        cost+=(y[i]-np.dot(x[i],theta))**2
+    
+    
+    cost=cost/(2*m)
+    return cost
+def diffCostFun(theta,x,y):
+    m=y.shape[0]
+    dif=np.matmul(np.transpose(x),((np.matmul(x,theta)-y)))/m
+    return dif
+def fitGD(x,y,alpha,lambda_,reg,iter):
+    theta =np.ones((x.shape[1],1))
+    cost=np.zeros(iter)
+    # j_=np.zeros(iter)
+    for i in range(iter):
+        
+        cost[i]=costFun(theta,x,y)
+        dif=diffCostFun(theta,x,y)
+        reg_cost=0
+        if reg==1:
+            
+            for j in range(theta.shape[0]):
+                reg_cost+=abs(theta[j])
+            reg_cost=reg_cost*lambda_/(theta.shape[0])
+            reg_dif=lambda_/(theta.shape[0])*np.ones((theta.shape[0],1))*np.sign(theta)
+            dif+=reg_dif
+            
+        if reg==2:
+
+            for j in range(theta.shape[0]):
+                reg_cost+=theta[j]**2
+            reg_cost=reg_cost*lambda_/(2*theta.shape[0])
+            reg_dif=(lambda_/(theta.shape[0]))*theta
+            dif+=reg_dif
+            
+        if reg==3:
+            for j in range(theta.shape[0]):
+                reg_cost+=theta[j]**2*0.25+abs(theta[j])*0.5
+            reg_cost=reg_cost*lambda_/(theta.shape[0])
+            reg_dif=lambda_/(theta.shape[0])*np.ones((theta.shape[0],1))*np.sign(theta)*0.5+lambda_/(theta.shape[0])*theta*0.5
+            
+            dif+=reg_dif
+            
+        cost[i]+=reg_cost
+        # j_[i]=dif
+        theta=theta-alpha*dif
+
+    
+
+    a=np.arange(0,iter)
+    
+    plt.ylabel('cost')
+    plt.xlabel('iter')
+    plt.plot(a,cost,marker='x',c='b')
+    plt.show()
+    return [theta,cost]
+def fitNormal(x,y):
+    a=(np.matmul(np.transpose(x),x))
+    b=np.matmul(np.linalg.inv(a),np.transpose(x))
+    theta=np.matmul(b,y)
+    return theta
+
+def wm(X_train, tau, x):
+    m = X_train.shape[0]
+    w = np.mat(np.eye(m))
+
+    for i in range(m):
+        xi = X_train[i]
+        d = (-2 * tau * tau)
+        w[i][i] = np.exp(np.dot((xi - x), (xi - x).T) / d)
+
+    return w
+
+
+def locallyWeighted(X_train, Y_train,x ,tau):
+    
+    x_ = np.array([1, x])
+    # x_=x
+    w = wm(X_train, tau, x_)
+    theta = np.linalg.pinv(X_train.T * (w * X_train)) * (X_train.T * (w * Y_train))
+    y = np.dot(x_, theta)
+
+    return float(y[0][0])
+
+        
+#     return 
+# x=np.array([2.5, 4.7, 5.2, 7.3, 9.5, 11.5])
+# y=np.array([5.21, 7.70, 8.30, 11, 14.5, 15])
+# x=x.reshape((6,1))
+# y=y.reshape((-1,1))
+# a=np.ones((6,1))
+# x=np.append(a,x,axis=1)
+# wei=fitNormal(x,y)
+# # print(wei)
+# b=np.ones((5,1))
+# x_test=np.array([3.5, 5, 6, 8, 10 ])
+# x_test=x_test.reshape((5,1))
+# x_test=np.append(b,x_test,axis=1)
+# # locallyWeighted(x,y,x_test,0.1)
+# # print(x_test)
+# # print(np.matmul(x_test,wei))
+# the=fitGD(x,y,0.01,1,2,10)
+# # print("xtest")
+# # print(np.matmul(x_test,the))
+
+        
+# y_testlo=LocallyWeighted(x,y,x_test,10,100)
+# print(y_testlo)
+
