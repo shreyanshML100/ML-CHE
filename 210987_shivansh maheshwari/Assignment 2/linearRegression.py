@@ -65,27 +65,13 @@ def fitNormal(x,y):
     theta=np.matmul(b,y)
     return theta
 
-def wm(X_train, tau, x):
-    m = X_train.shape[0]
-    w = np.mat(np.eye(m))
-
-    for i in range(m):
-        xi = X_train[i]
-        d = (-2 * tau * tau)
-        w[i][i] = np.exp(np.dot((xi - x), (xi - x).T) / d)
-
-    return w
-
-
 def locallyWeighted(X_train, Y_train,x ,tau):
-    
-    x_ = np.array([1, x])
-    # x_=x
-    w = wm(X_train, tau, x_)
-    theta = np.linalg.pinv(X_train.T * (w * X_train)) * (X_train.T * (w * Y_train))
-    y = np.dot(x_, theta)
-
-    return float(y[0][0])
+    w=np.linalg.pinv(X_train.T@X_train)@X_train.T@Y_train
+    res=Y_train-X_train@w
+    C=np.diag(res**2)
+    theta=np.linalg.pinv(X_train.T@np.linalg.pinv(C)@X_train)@(X_train.T@np.linalg.pinv(C)@Y_train)
+    y_predict=np.dot(theta,x)
+    return y_predict
 
         
 #     return 
@@ -109,6 +95,6 @@ def locallyWeighted(X_train, Y_train,x ,tau):
 # # print(np.matmul(x_test,the))
 
         
-# y_testlo=LocallyWeighted(x,y,x_test,10,100)
+# y_testlo=LocallyWeighted(x,y,x_test,10)
 # print(y_testlo)
 
