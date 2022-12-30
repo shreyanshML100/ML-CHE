@@ -13,7 +13,7 @@ def costFun(theta, X_train, Y_train):
     j = 0
 
     for i in range(m):
-        j = j + ((np.dot(x[i], Theta) - Y_train[i]) * (np.dot(x[i], Theta) - Y_train[i]))
+        j = j + (np.matmul(x[i], Theta) - Y_train[i]) **2 #(np.dot(x[i], Theta) - Y_train[i]))
     return j / 2
 
 
@@ -29,7 +29,7 @@ def fitNormal(X_train, Y_train):
     y = Y_train.reshape((Y_train.shape[0], 1))
     x = np.hstack((np.ones((X_train.shape[0], 1)), X_train))
     xTrans = x.T
-    return np.dot(np.matmul(inv(np.matmul(xTrans, x)), xTrans), y)
+    return np.matmul(np.matmul(inv(np.matmul(xTrans, x)), xTrans), y)
 
 
 def fitGD(X_train, Y_train, alpha, lam, reg, iterations):
