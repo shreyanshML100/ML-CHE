@@ -1,12 +1,36 @@
-# ML-CHE
-Introduction to Machine Learning for Chemical Engineering (Simutech Winter Project)
 
-Submission Guidelines:
+# Air Quality Data Analysis and Relative Humidity Prediction
 
-1. Fork a branch of the given Repository.
+## Objective
+- Gain practical exposure to machine learning algorithms applied in analyzing air quality data.
+- Develop a predictive model for relative humidity using 13 air quality indicators to enhance field forecasting accuracy.
 
-2. Make a Folder of the given format: **200954_Shreyansh Pachauri** in your Forked Repository.
+## Approach
+- Learn Generalised Linear Models (GLMs), Neural Networks, and Locally Weighted Regression fundamentals.
+- Perform data cleaning, pre-processing, and Exploratory Data Analysis (EDA) on the Air Quality Index dataset.
+- Implement neural network models using TensorFlow for accurate relative humidity predictions.
 
-3. Inside this Folder make a Folder named **Assignment_0** which contains all the Python Files in the given Assignment.
+## Outcome
+- Successfully model Relative Humidity based on 13 Air Quality factors.
+- Achieve Mean Squared Error (MSE) of 20, demonstrating effective forecasting capability.
 
-4. Make a Pull Request in this Repo.
+## Repository Structure
+- `data/`: Directory containing the Air Quality Index dataset and processed data files.
+- `notebooks/`: Jupyter notebooks for data analysis, model development, and evaluation.
+- `models/`: TensorFlow models for relative humidity prediction.
+- `README.md`: This file providing an overview of the project.
+
+## Usage
+1. Clone the repository:
+   ```
+   git clone [https://github.com/your_username/air-quality-ml.git](https://github.com/shivhash/ML-CHE.git
+   ```
+2. Navigate to the project directory.
+3. Explore the Jupyter notebooks in `notebooks/` for detailed analysis and model development.
+4. Run the provided scripts to replicate results or train new models.
+
+## Dependencies
+- Python 3.x
+- TensorFlow
+- Jupyter Notebook
+- Pandas, NumPy, Matplotlib, and other necessary libraries as listed in `requirements.txt`
